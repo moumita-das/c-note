@@ -1,0 +1,19 @@
+.upload__wrapper {
+
+    display: flex;
+    height: 100%;
+
+    .lyrics_wrapper {
+        height: 100%;
+
+        .form-group {
+            height: 100%;
+
+            textarea {
+                resize: none;
+                height: 100%;
+            }
+        }
+    }
+
+}
