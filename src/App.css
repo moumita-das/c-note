@@ -9,13 +9,41 @@ body,
 .App {
   overflow-x: hidden;
   height: 100%;
+  width: 100%;
+}
+
+.App {
+  padding: 0.5em 3em;
+  background-color: var(--color-lighter);
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.container {
+  max-width: 100% !important;
+  padding: 0;
 }
 @import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
 #root {
   font-family: "Merriweather", serif;
-  --color-primary: #071952;
+  /* --color-primary: #071952;
   --color-secondary: #0b666a;
   --color-light: #35a29f;
-  --color-lighter: #97feed;
+  --color-lighter: #97feed; */
   --color-white: #fff;
+
+  --color-primary: #1d5b79;
+  --color-secondary: #468b97;
+  --color-light: #ef6262;
+  --color-lighter: #f3aa60;
+}
+
+.customBtn {
+  color: var(--color-primary);
+  border: solid 2px var(--color-primary);
+  border-radius: 24px;
+}
+
+.customBtn:hover {
+  background-color: var(--color-primary);
+  color: #fff;
 }

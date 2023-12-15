@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Logo from "../assets/images/logo.png";
 import "./CustomNavbar.scss";
 
 const CustomNavbar = () => {
@@ -8,14 +9,15 @@ const CustomNavbar = () => {
 
   return (
     <nav className="navbar">
-      <h2>CNote</h2>
-      <ul>
-        {/* <li>
-          <Link to="/login">Login</Link>
-        </li> */}
+      <div className="brand col-2">
+        <img src={Logo} />
+      </div>
+      <ul className="col-7">
         <li>
           <Link
-            className={`${location.pathname === "/home" ? "active" : ""}`}
+            className={`nav-item ${
+              location.pathname === "/home" ? "active" : ""
+            }`}
             to="/home"
           >
             Home
@@ -23,13 +25,25 @@ const CustomNavbar = () => {
         </li>
         <li>
           <Link
-            className={`${location.pathname === "/upload" ? "active" : ""}`}
+            className={`nav-item ${
+              location.pathname === "/upload" ? "active" : ""
+            }`}
             to="/upload"
           >
             Upload
           </Link>
         </li>
       </ul>
+      <div className="col-3 text-end">
+        <Link
+          className={`nav-item ${
+            location.pathname === "/login" ? "active" : ""
+          }`}
+          to="/login"
+        >
+          Login / Sign up
+        </Link>
+      </div>
     </nav>
   );
 };

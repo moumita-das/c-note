@@ -8,8 +8,8 @@ const Layout = (props) => {
       <div
         style={{
           height: "100%",
-          marginTop: "5px",
-          background: "var(--color-light)",
+          // marginTop: "5px",
+          // background: "var(--color-light)",
         }}
         className="container"
       >
