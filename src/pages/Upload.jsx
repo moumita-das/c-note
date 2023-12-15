@@ -43,9 +43,15 @@ const Upload = () => {
   useEffect(() => {
     if (lyrics.trim().length == 0) return;
     const upDatedLyrics = lyrics + "\n";
-    if (upDatedLyrics.indexOf("(") >= 0 && upDatedLyrics.indexOf(")") >= 0) {
+    if (
+      upDatedLyrics.indexOf("(") >= 0 &&
+      upDatedLyrics.indexOf(")") &&
+      upDatedLyrics.substring(
+        upDatedLyrics.indexOf("("),
+        upDatedLyrics.indexOf(")").length < 4
+      ) >= 0
+    ) {
       const split1Tokens = upDatedLyrics.split("(");
-      console.log(split1Tokens);
       const split2Tokens = [];
       for (let i = 0; i < split1Tokens.length; i++) {
         let token = split1Tokens[i];
@@ -57,7 +63,7 @@ const Upload = () => {
               id: split2Tokens.length,
               type: "chord",
               chord: splitVerse[0],
-              verse:
+              text:
                 splitVerse[1].indexOf("\n") >= 0
                   ? splitVerse[1].substring(0, splitVerse[1].indexOf("\n"))
                   : splitVerse[1],
@@ -71,7 +77,7 @@ const Upload = () => {
                 id: split2Tokens.length,
                 type: "chord",
                 chord: "",
-                verse: splitVerse[1].substring(
+                text: splitVerse[1].substring(
                   splitVerse[1].indexOf("\n") + 1,
                   splitVerse[1].length
                 ),
@@ -82,7 +88,7 @@ const Upload = () => {
               id: split2Tokens.length,
               type: "chord",
               chord: "",
-              verse: token,
+              text: token,
             });
           }
           if (token.indexOf("\n") > 0) {

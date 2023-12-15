@@ -12,7 +12,7 @@ const ChordsEditor = ({ songObj }) => {
   const [title, setTitle] = useState("");
   const [controlsDisplayed, setControlsDisplayed] = useState(false);
   const [textAlignment, setTextAlignment] = useState("left");
-  const [capo, setCapo] = useState("");
+  const [capo, setCapo] = useState(null);
   const [strum, setStrum] = useState("uduudu");
   const [recordedStrum, setRecordedStrum] = useState(null);
   const [generatedStrum, setGeneratedStrum] = useState({});
@@ -104,7 +104,7 @@ const ChordsEditor = ({ songObj }) => {
     });
     setSongDisplayElement(updatedSongObj);
   };
-  const handleSaveBtnClick = () => {
+  const sendData = (base64) => {
     fetch("http://localhost:8000/save_lyrics_and_chords", {
       method: "POST",
       headers: {
@@ -115,7 +115,7 @@ const ChordsEditor = ({ songObj }) => {
         title,
         strum,
         capo,
-        recording: audioURL,
+        recording: base64,
       }),
     })
       .then((data) => data.json())
@@ -123,11 +123,24 @@ const ChordsEditor = ({ songObj }) => {
         console.log(res);
       });
   };
+  const handleSaveBtnClick = () => {
+    console.log(recordedStrum);
+    if (recordedStrum) {
+      var reader = new window.FileReader();
+      reader.readAsDataURL(recordedStrum);
+      reader.onloadend = function () {
+        let base64 = reader.result;
+        base64 = base64.split(",")[1];
+        console.log(base64);
+        sendData(base64);
+      };
+    } else sendData(null);
+  };
   useEffect(() => {
     setSongDisplayElement(songObj);
     let line;
     songObj.some((item) => {
-      if (item.text.length > 10) {
+      if (item.text.replaceAll(" ", "").length > 10) {
         line = item.text;
         line = line.split(" ");
         line = line.slice(0, 3);
