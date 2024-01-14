@@ -2,7 +2,16 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import Switch from "../components/Switch";
-import { Headphones, Mic, Pause, PauseCircle, Play, X } from "lucide-react";
+import {
+  Headphones,
+  Mic,
+  Pause,
+  PauseCircle,
+  Play,
+  X,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import ErrorToast from "../components/ErrorToast";
 import RecorderToast from "../components/RecorderToast";
 
@@ -11,9 +20,9 @@ const ChordsEditor = ({ songObj }) => {
   const [songDisplayElement, setSongDisplayElement] = useState([]);
   const [title, setTitle] = useState("");
   const [controlsDisplayed, setControlsDisplayed] = useState(false);
-  const [textAlignment, setTextAlignment] = useState("left");
+  // const [textAlignment, setTextAlignment] = useState("left");
   const [capo, setCapo] = useState(null);
-  const [strum, setStrum] = useState("uduudu");
+  const [strum, setStrum] = useState("");
   const [recordedStrum, setRecordedStrum] = useState(null);
   const [generatedStrum, setGeneratedStrum] = useState({});
   const [recordClick, setRecordClick] = useState(false);
@@ -119,19 +128,15 @@ const ChordsEditor = ({ songObj }) => {
       }),
     })
       .then((data) => data.json())
-      .then((res) => {
-        console.log(res);
-      });
+      .then((res) => {});
   };
   const handleSaveBtnClick = () => {
-    console.log(recordedStrum);
     if (recordedStrum) {
       var reader = new window.FileReader();
       reader.readAsDataURL(recordedStrum);
       reader.onloadend = function () {
         let base64 = reader.result;
         base64 = base64.split(",")[1];
-        console.log(base64);
         sendData(base64);
       };
     } else sendData(null);
@@ -148,8 +153,7 @@ const ChordsEditor = ({ songObj }) => {
       }
       if (line) return true;
     });
-
-    setTitle(line);
+    if (title === "" || !title) setTitle(line);
   }, [songObj]);
   return (
     <>
@@ -160,12 +164,26 @@ const ChordsEditor = ({ songObj }) => {
             setControlsDisplayed(true);
           }}
         >
-          Settings
+          <p>Settings</p>
+          <ChevronDown />
         </div>
       ) : (
         <div className="controls-top">
-          <p>Settings</p>
-          <div className="box">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "0em 3em",
+            }}
+            onClick={() => {
+              setControlsDisplayed(false);
+            }}
+          >
+            <p style={{ margin: "0" }}>Settings</p>
+            <ChevronUp />
+          </div>
+
+          {/* <div className="box">
             <h6>Align</h6>
             <Switch
               trueState="RIGHT"
@@ -174,7 +192,7 @@ const ChordsEditor = ({ songObj }) => {
                 setTextAlignment(state ? "right" : "left");
               }}
             />
-          </div>
+          </div> */}
           <div className="box">
             <h6>Capo on</h6>
             <input
@@ -227,20 +245,10 @@ const ChordsEditor = ({ songObj }) => {
               </div>
             </div>
           </div>
-          <div className="control-bottom">
-            <button
-              className="btn customBtn"
-              onClick={() => {
-                setControlsDisplayed(false);
-              }}
-            >
-              Minimize
-            </button>
-          </div>
         </div>
       )}
-      <ul className="flex-list">
-        <li className="flex-row title">
+      <div className="flex-list" style={{ height: "auto" }}>
+        <div className="flex-row title">
           <h5>Title</h5>
           <input
             className="form-control"
@@ -249,7 +257,9 @@ const ChordsEditor = ({ songObj }) => {
               setTitle(e.target.value);
             }}
           />
-        </li>
+        </div>
+      </div>
+      <ul className="flex-list">
         {songDisplayElement.map((row) => {
           return (
             <li className="flex-row" key={row.id}>
@@ -264,16 +274,18 @@ const ChordsEditor = ({ songObj }) => {
           );
         })}
       </ul>
-      <div className="bottom">
-        <div
-          className="controls-heading controls-bottom"
-          onClick={() => {
-            handleSaveBtnClick(true);
-          }}
-        >
-          Save Notes
+      {songObj.length > 1 && (
+        <div className="bottom">
+          <div
+            className="controls-heading controls-bottom"
+            onClick={() => {
+              handleSaveBtnClick(true);
+            }}
+          >
+            Save Notes
+          </div>
         </div>
-      </div>
+      )}
 
       {toastError && <ErrorToast error={toastError} />}
       {recordClick && (

@@ -4,8 +4,10 @@ import SongsList from "./SongsList";
 
 import "./Home.scss";
 import SongDetails from "./SongDetails";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [songs, setSongs] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
   useEffect(() => {
@@ -24,19 +26,14 @@ const Home = () => {
     })
       .then((data) => data.json())
       .then((res) => {
-        console.log(res);
         setSelectedSong(res);
+        navigate(`/song/${id}`, { state: { selectedSong: res } });
       });
   };
-  console.log(songs);
   return (
     <Layout>
       <div className="home">
-        {selectedSong === null ? (
-          <SongsList songList={songs} clickHandler={fetchSongById} />
-        ) : (
-          <SongDetails selectedSong={selectedSong} />
-        )}
+        <SongsList songList={songs} clickHandler={fetchSongById} />
       </div>
     </Layout>
   );

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Layout from "./Layout";
 import {
   Headphones,
   Mic,
@@ -8,23 +9,37 @@ import {
   Play,
   X,
 } from "lucide-react";
-var myInterval;
-const SongDetails = ({ selectedSong }) => {
-  const audioRef = React.useRef();
+import { useLocation } from "react-router-dom";
+const SongDetails = () => {
+  const location = useLocation();
+  const audioRef = useRef(null);
+  const lineRef = useRef([]);
+  const ulRef = useRef(null);
+  const [selectedSong, setSelectedSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [scrollSpeed, setScrollSpeed] = useState(0);
+  const [lastScrollLineIndex, setLastScrollLineIndex] = useState(0);
   const speedList = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-  const lines = JSON.parse(selectedSong.lyrics_chords);
-  const scroll = (speed) => {
-    window.scrollBy({
-      top: speed,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
+  const lines = selectedSong ? JSON.parse(selectedSong.lyrics_chords) : [];
   useEffect(() => {
-    myInterval = setInterval(() => scroll(scrollSpeed), 100);
+    if (scrollSpeed === 0) return;
+    scrollTo(ulRef.current, ulRef.current.scrollHeight, 5000, 1000);
   }, [scrollSpeed]);
+  useEffect(() => {
+    setSelectedSong(location.state.selectedSong);
+  }, [location]);
+  function scrollTo(element, to, duration, lastDifference) {
+    var difference = to - element.scrollTop;
+    var perTick = (difference / duration) * 10;
+    if (duration <= 0 || lastDifference === difference) {
+      setScrollSpeed(0);
+      return false;
+    }
+    setTimeout(function () {
+      element.scrollTop = element.scrollTop + perTick;
+      scrollTo(element, to, duration - 10, difference);
+    }, 80 / scrollSpeed);
+  }
   const playRecording = async () => {
     const base64Response = await fetch(
       `data:image/jpeg;base64,${selectedSong.recording}`
@@ -61,65 +76,86 @@ const SongDetails = ({ selectedSong }) => {
   }
 
   return (
-    <div className="details">
-      <div className="lyrics">
-        <h3>{selectedSong.title}</h3>
-        <ul>
-          {lines.map((item) => (
-            <li key={item.id}>{item.text}</li>
-          ))}
-        </ul>
-      </div>
-      <div className="controls">
-        <div className="flex-box">
-          <div className="label">Capo</div>
-          <div className="value">{selectedSong.capo}</div>
-        </div>
-        <div className="flex-box">
-          <div className="label">Strum</div>
-          <div className="value">{selectedSong.strum}</div>
-        </div>
-
-        {selectedSong.recording ? (
-          <div className="flex-box">
-            <div className="label">Recording</div>
-            <div className="value" id="btn">
-              <button
-                className="customBtn"
-                onClick={() => {
-                  if (!isPlaying) playRecording();
-                  else pauseRecording();
-                }}
-              >
-                {!isPlaying ? (
-                  <Play color="#fff" />
-                ) : (
-                  <PauseCircle color="#fff" />
-                )}
-              </button>
-            </div>
+    <Layout>
+      <div className="home">
+        <div className="details">
+          <div className="lyrics">
+            <h3>{selectedSong?.title}</h3>
+            <ul id="song-line-items" ref={ulRef}>
+              <li>&nbsp;</li>
+              <li>&nbsp;</li>
+              <li>&nbsp;</li>
+              <li>&nbsp;</li>
+              <li>&nbsp;</li>
+              <li>&nbsp;</li>
+              <li>&nbsp;</li>
+              <li>&nbsp;</li>
+              {lines?.map((item, index) => (
+                <li
+                  key={item.id}
+                  ref={(el) => {
+                    lineRef.current[index] = el;
+                  }}
+                >
+                  {item.text}
+                </li>
+              ))}
+              <li>&nbsp;</li>
+              <li>&nbsp;</li>
+            </ul>
           </div>
-        ) : (
-          <></>
-        )}
-        <div className="flex-box">
-          <div className="label">Scroll</div>
-          <div className="value">{scrollSpeed}</div>
+          <div className="controls">
+            <div className="flex-box">
+              <div className="label">Capo</div>
+              <div className="value">{selectedSong?.capo}</div>
+            </div>
+            <div className="flex-box">
+              <div className="label">Strum</div>
+              <div className="value">{selectedSong?.strum}</div>
+            </div>
+
+            {selectedSong?.recording ? (
+              <div className="flex-box">
+                <div className="label">Recording</div>
+                <div className="value" id="btn">
+                  <button
+                    className="customBtn"
+                    onClick={() => {
+                      if (!isPlaying) playRecording();
+                      else pauseRecording();
+                    }}
+                  >
+                    {!isPlaying ? (
+                      <Play color="#fff" />
+                    ) : (
+                      <PauseCircle color="#fff" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+            <div className="flex-box">
+              <div className="label">Scroll</div>
+              <div className="value">{scrollSpeed}</div>
+            </div>
+            <ul>
+              {speedList.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => {
+                    setScrollSpeed(item);
+                  }}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <ul>
-          {speedList.map((item, index) => (
-            <li
-              key={index}
-              onClick={() => {
-                setScrollSpeed(item);
-              }}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
       </div>
-    </div>
+    </Layout>
   );
 };
 

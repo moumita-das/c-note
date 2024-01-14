@@ -34,7 +34,6 @@ const Upload = () => {
     const upDatedLyrics = lyrics + "\n";
     if (upDatedLyrics.indexOf("(") >= 0 && upDatedLyrics.indexOf(")") >= 0) {
       const split1Tokens = upDatedLyrics.split("(");
-      console.log(split1Tokens);
       const split2Tokens = [];
       for (let i = 0; i < split1Tokens.length; i++) {
         let token = split1Tokens[i];

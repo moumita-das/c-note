@@ -16,7 +16,9 @@ const CustomNavbar = () => {
         <li>
           <Link
             className={`nav-item ${
-              location.pathname === "/home" ? "active" : ""
+              location.pathname === "/home" || location.pathname === "/"
+                ? "active"
+                : ""
             }`}
             to="/home"
           >
