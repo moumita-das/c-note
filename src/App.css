@@ -13,7 +13,7 @@ body,
 }
 
 .App {
-  padding: 0.5em 3em;
+  padding: 0;
   background-color: var(--color-lighter);
 
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -31,14 +31,14 @@ body,
   --color-lighter: #97feed; */
   --color-white: #fff;
 
-  --color-primary: #1d5b79;
+  /* --color-primary: #1d5b79;
   --color-secondary: #468b97;
   --color-light: #ef6262;
-  --color-lighter: #f3aa60;
-  /* --color-primary: #557c55;
+  --color-lighter: #f3aa60; */
+  --color-primary: #557c55;
   --color-secondary: #a6cf98;
   --color-light: #fa7070;
-  --color-lighter: #f2ffe9; */
+  --color-lighter: #f2ffe9;
 }
 
 .customBtn {
