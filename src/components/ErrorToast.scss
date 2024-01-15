@@ -1,38 +1,41 @@
 .error-toast {
+  --color-primary: #2f2d2d;
+  --color-secondary: #ff3333;
+  --color-blue: #7676a7;
+  --color-gray: #eaeaea;
 
-    --color-primary: #2f2d2d;
-    --color-secondary: #ff3333;
-    --color-blue: #7676a7;
-    --color-gray: #eaeaea;
+  .toast-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    background-color: var(--color-primary);
+    color: var(--color-gray);
+    border: solid 1px var(--color-secondary);
+    border-bottom: none;
+    border-radius: 0;
 
-
-
-    .toast-header {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        text-align: left;
-        background-color: var(--color-primary);
-        color: var(--color-gray);
-        border: solid 1px var(--color-secondary);
-        border-bottom: none;
-        border-radius: 0;
-
-        .close-btn {
-            background: transparent;
-            color: var(--color-secondary);
-            padding: 0.2em;
-            width: fit-content;
-            box-shadow: none;
-            border: none
-        }
-
+    .close-btn {
+      background: transparent;
+      color: var(--color-secondary);
+      padding: 0.2em;
+      width: fit-content;
+      box-shadow: none;
+      border: none;
     }
+  }
 
-    .toast-body {
-        background-color: var(--color-primary);
-        border: solid 1px var(--color-secondary);
-        border-top: none;
-        color: var(--color-secondary)
-    }
+  .toast-body {
+    background-color: var(--color-primary);
+    border: solid 1px var(--color-secondary);
+    border-top: none;
+    color: var(--color-secondary);
+  }
+}
+
+.success-toast {
+  --color-secondary: #34a549;
+  //   .toast-header {
+  //     border: solid 1px var(--color-secondary);
+  //   }
 }

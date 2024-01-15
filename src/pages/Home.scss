@@ -6,24 +6,106 @@
     height: 100%;
 
     .list {
-      ul {
-        list-style: none;
-
-        li {
-          .list-box {
-            width: 75%;
-            padding: 0.5em;
-
-            &:hover {
-              background: #c0864b73;
+      height: 100%;
+      .list-controls {
+        padding-left: 0em;
+        display: flex;
+        align-items: center;
+        p {
+          font-size: 1em;
+          font-weight: 600;
+          margin-bottom: 0;
+        }
+        .search-wrapper {
+          display: flex;
+          align-items: center;
+          border: solid 1px var(--color-secondary) !important;
+          border-radius: 0.6em;
+          width: 50em;
+          padding: 0.2em 0.3em;
+          .search {
+            background: transparent;
+            border: none;
+            flex: 9;
+            text-align: right;
+            border-right: solid 1px var(--color-secondary) !important;
+            border-radius: 0;
+            line-height: 0.4em;
+            &:focus-visible,
+            &:focus {
+              box-shadow: none;
+              border: none;
             }
+          }
+          svg {
+            flex: 1;
+            margin-left: -6px;
+          }
+        }
+      }
+      .table-wrapper {
+        height: calc(100% - 2em);
+        overflow-y: scroll;
+        .table {
+          border-collapse: separate !important;
+          border-spacing: 0 4px;
 
-            .info {
-              display: flex;
+          :nth-child(1) {
+            width: 50%;
+          }
+          :nth-child(2) {
+            width: 25%;
+          }
+          :nth-child(3) {
+            width: 25%;
+          }
+          thead {
+            th {
+              background: transparent;
+              border-color: transparent;
+              letter-spacing: 0.2ch;
+              font-size: 1.2em;
+              text-transform: uppercase;
+              font-weight: 500;
+            }
+          }
+          tbody {
+            tr {
+              background: rgb(70, 139, 151);
+              background: linear-gradient(
+                90deg,
+                rgba(70, 139, 151, 1) 0%,
+                rgba(239, 98, 98, 1) 61%,
+                rgba(243, 170, 96, 1) 100%
+              );
+              border-color: transparent;
 
-              p {
-                span {
-                  font-weight: 600x;
+              td {
+                background: transparent;
+                padding: 0.75em 1em;
+                &:first-child {
+                  border-top-left-radius: 10px;
+                  border-bottom-left-radius: 10px;
+                  color: #fff;
+                  font-weight: 600;
+                }
+                &:last-child {
+                  border-top-right-radius: 10px;
+                  border-bottom-right-radius: 10px;
+                }
+              }
+              &:hover {
+                cursor: pointer;
+                background: var(--color-secondary);
+                background: rgb(243, 170, 96);
+                background: linear-gradient(
+                  90deg,
+                  rgba(243, 170, 96, 1) 0%,
+                  rgba(239, 98, 98, 1) 65%,
+                  rgba(70, 139, 151, 1) 100%
+                );
+                td {
+                  color: #fff;
                 }
               }
             }
@@ -39,9 +121,23 @@
 
       .lyrics {
         flex: 4;
+        .header {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          cursor: pointer;
 
-        h3 {
-          margin-left: 1em;
+          svg {
+            flex: 1;
+            padding: 0;
+            color: var(--color-secondary);
+            width: 2em;
+          }
+          h3 {
+            flex: 9;
+            margin-left: -10px;
+            color: var(--color-secondary);
+          }
         }
 
         ul {
@@ -52,10 +148,7 @@
           li {
             white-space: pre-wrap;
           }
-
-
         }
-
       }
 
       .controls {
@@ -67,7 +160,7 @@
           margin-bottom: 1em;
           max-width: 16em;
 
-          >div {
+          > div {
             padding: 0.7em 1em;
           }
 
@@ -108,7 +201,6 @@
           list-style: none;
           max-width: 16em;
           padding: 0;
-
 
           li {
             background-color: var(--color-secondary);

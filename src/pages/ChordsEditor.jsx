@@ -14,8 +14,9 @@ import {
 } from "lucide-react";
 import ErrorToast from "../components/ErrorToast";
 import RecorderToast from "../components/RecorderToast";
+import SuccessToast from "../components/SuccessToast";
 
-const ChordsEditor = ({ songObj }) => {
+const ChordsEditor = ({ songObj, handleSuccessfulSave }) => {
   const audioRef = React.useRef();
   const [songDisplayElement, setSongDisplayElement] = useState([]);
   const [title, setTitle] = useState("");
@@ -27,6 +28,7 @@ const ChordsEditor = ({ songObj }) => {
   const [generatedStrum, setGeneratedStrum] = useState({});
   const [recordClick, setRecordClick] = useState(false);
   const [toastError, setToastError] = useState(false);
+  const [toastSuccess, setToastSuccess] = useState(false);
   const [audioURL, setAudioURL] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -128,7 +130,18 @@ const ChordsEditor = ({ songObj }) => {
       }),
     })
       .then((data) => data.json())
-      .then((res) => {});
+      .then((res) => {
+        if (res.message === "success") {
+          setToastSuccess("Saved successfully.");
+          handleSuccessfulSave();
+          setCapo(null);
+          setRecordedStrum(null);
+          setStrum("");
+          setTitle("");
+        } else {
+          setToastError("We ran into an error. Please try later.");
+        }
+      });
   };
   const handleSaveBtnClick = () => {
     if (recordedStrum) {
@@ -154,6 +167,7 @@ const ChordsEditor = ({ songObj }) => {
       if (line) return true;
     });
     if (title === "" || !title) setTitle(line);
+    // setToastSuccess(false)
   }, [songObj]);
   return (
     <>
@@ -288,6 +302,7 @@ const ChordsEditor = ({ songObj }) => {
       )}
 
       {toastError && <ErrorToast error={toastError} />}
+      {toastSuccess && <SuccessToast success={toastSuccess} />}
       {recordClick && (
         <RecorderToast
           saveHandler={saveStrumRecording}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Layout from "./Layout";
 import {
+  ChevronLeft,
   Headphones,
   Mic,
   Octagon,
@@ -9,9 +10,10 @@ import {
   Play,
   X,
 } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const SongDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const audioRef = useRef(null);
   const lineRef = useRef([]);
   const ulRef = useRef(null);
@@ -80,7 +82,15 @@ const SongDetails = () => {
       <div className="home">
         <div className="details">
           <div className="lyrics">
-            <h3>{selectedSong?.title}</h3>
+            <div
+              className="header"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              <ChevronLeft size={32} />
+              <h3>{selectedSong?.title}</h3>
+            </div>
             <ul id="song-line-items" ref={ulRef}>
               <li>&nbsp;</li>
               <li>&nbsp;</li>

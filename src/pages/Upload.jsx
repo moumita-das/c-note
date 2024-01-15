@@ -24,6 +24,9 @@ const LyricsEditor = ({ value, changeHandler }) => {
 const Upload = () => {
   const [lyrics, setLyrics] = useState("");
   const [lyricsWithChords, setLyricsWithChords] = useState([]);
+  const handleResetLyrics = () => {
+    setLyrics("");
+  };
   function isLineChord(line) {
     const numSpaces = line.length - line.replaceAll(" ", "").length;
     const numNonSpaces = line.replaceAll(" ", "").length;
@@ -186,7 +189,10 @@ const Upload = () => {
           />
         </div>
         <div className="chords_wrapper col-8">
-          <ChordsEditor songObj={lyricsWithChords} />
+          <ChordsEditor
+            songObj={lyricsWithChords}
+            handleSuccessfulSave={handleResetLyrics}
+          />
         </div>
       </div>
     </Layout>

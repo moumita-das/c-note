@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const [songs, setSongs] = useState([]);
-  const [selectedSong, setSelectedSong] = useState(null);
   useEffect(() => {
     if (songs.length > 0) return;
     fetch("http://127.0.0.1:8000/fetch_all_saved_chords", {
@@ -26,7 +25,6 @@ const Home = () => {
     })
       .then((data) => data.json())
       .then((res) => {
-        setSelectedSong(res);
         navigate(`/song/${id}`, { state: { selectedSong: res } });
       });
   };

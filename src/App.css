@@ -35,6 +35,10 @@ body,
   --color-secondary: #468b97;
   --color-light: #ef6262;
   --color-lighter: #f3aa60;
+  /* --color-primary: #557c55;
+  --color-secondary: #a6cf98;
+  --color-light: #fa7070;
+  --color-lighter: #f2ffe9; */
 }
 
 .customBtn {
