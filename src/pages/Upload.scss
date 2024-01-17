@@ -2,11 +2,9 @@
 
     display: flex;
     height: 100%;
-    padding: 1em 0em;
+    padding: 1em 2em 0em 2em;
 
     .lyrics_wrapper {
-        // height: 100%;
-
         .form-group {
             height: 100%;
             padding: 0;
@@ -18,10 +16,10 @@
 
             .form-label {
                 background-color: var(--color-secondary);
-                width: fit-content;
-                padding: 0.25em 4em;
+                width: 80%;
+                padding: 0.25em 2em;
                 margin-bottom: 0;
-                border-radius: 25px;
+                border-radius: 0px;
                 position: absolute;
                 height: 2.4em;
                 top: 1em;
@@ -32,17 +30,19 @@
             textarea {
                 resize: none;
                 height: 100%;
-                border-radius: 25px;
+                border-radius: 0;
                 margin-top: 2em;
-                background-color: #D9D9D9;
+                background-color: var(--color-lighter);
                 padding: 2em;
+                border: solid 0.5em var(--color-secondary);
 
                 &:hover,
                 &:active,
                 &:focus,
                 &:focus-visible {
                     box-shadow: none;
-                    border: solid 1px var(--color-secondary)
+                    border: solid 0.5em var(--color-primary);
+                    background-color: #D9D9D9;
                 }
             }
         }
@@ -58,11 +58,11 @@
     .controls-heading {
         background-color: var(--color-secondary);
         width: 16em;
-        padding: 0.25em 4em;
+        padding: 0.25em 1em;
         margin-bottom: 0;
-        border-radius: 25px;
+        border-radius: 0px;
         position: absolute;
-        height: 2.4em;
+        height: fit-content;
         top: 1em;
         right: 0;
         line-height: 1.8em;
@@ -72,10 +72,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
 
-        p {
-            margin-bottom: 0;
+        .display {
+            display: flex;
+            align-items: center;
+
+            p {
+                margin-bottom: 0;
+                margin-right: 1em;
+            }
         }
+
 
         &.controls-bottom {
             bottom: 1em !important;
@@ -83,8 +91,71 @@
             top: -1em;
 
             &:hover {
-                background-color: #0b3b54 !important;
+                background-color: var(--color-primary) !important;
             }
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+
+            h6 {
+                text-align: left;
+                font-size: 0.9em;
+                width: 40%;
+                margin: 0;
+            }
+
+            .customInput {
+                background-color: transparent;
+                border: none;
+                border-bottom: solid 2px white;
+                border-radius: 0;
+                color: white;
+                text-align: center;
+                width: 60%;
+
+                &:focus,
+                &:focus-visible {
+                    box-shadow: none;
+                    border-color: blue;
+                    color: blue;
+                }
+            }
+
+            .input-with-icon {
+                display: flex;
+                flex-direction: column;
+                width: 60%;
+
+                .lucide {
+                    cursor: pointer;
+                }
+
+                :nth-child(2) {
+
+                    display: flex;
+                    column-gap: 2em;
+                }
+            }
+
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            /* Firefox */
+            input[type=number] {
+                -moz-appearance: textfield;
+            }
+
+            #strum-input {
+                text-align: left;
+                margin-bottom: 0.5em;
+                width: 100%;
+            }
+
         }
     }
 
@@ -93,7 +164,7 @@
         background-color: var(--color-secondary);
         width: 16em;
         margin-bottom: 0;
-        border-radius: 16px;
+        border-radius: 0;
         position: absolute;
         top: 1em;
         right: 0;
@@ -106,7 +177,6 @@
         .box {
             display: flex;
             align-items: center;
-
 
             h6 {
                 text-align: left;

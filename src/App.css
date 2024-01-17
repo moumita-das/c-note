@@ -1,8 +1,8 @@
-* {
+/* * {
   padding: 0;
   margin: 0;
   width: 100%;
-}
+} */
 html,
 body,
 #root,
@@ -16,7 +16,7 @@ body,
   padding: 0;
   background-color: var(--color-lighter);
 
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
 }
 .container {
   max-width: 100% !important;
@@ -60,4 +60,5 @@ body,
 /* Works on Chrome, Edge, and Safari */
 ::-webkit-scrollbar {
   width: 1px;
+  height: 10px;
 }

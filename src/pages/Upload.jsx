@@ -10,7 +10,7 @@ import ChordsEditor from "./ChordsEditor";
 const LyricsEditor = ({ value, changeHandler }) => {
   return (
     <Form.Group className="form-group" controlId="exampleForm.ControlTextarea1">
-      <Form.Label>Enter here</Form.Label>
+      <Form.Label>Enter your content here</Form.Label>
       <Form.Control
         as="textarea"
         rows={3}

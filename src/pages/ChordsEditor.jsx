@@ -171,7 +171,83 @@ const ChordsEditor = ({ songObj, handleSuccessfulSave }) => {
   }, [songObj]);
   return (
     <>
-      {!controlsDisplayed ? (
+      <div
+        className="controls-heading"
+        onClick={() => {
+          setControlsDisplayed((prevState) => !prevState);
+        }}
+      >
+        <div className="display">
+          <p>Settings</p>
+          {!controlsDisplayed ? <ChevronDown /> : <ChevronUp />}
+        </div>
+        {!controlsDisplayed ? (
+          <></>
+        ) : (
+          <>
+            <div className="box">
+              <h6>Capo on</h6>
+              <input
+                id="capo-input"
+                className="form-control customInput"
+                type="number"
+                value={capo}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                onChange={(e) => {
+                  const numberEntered = parseInt(e.target.value);
+                  if (numberEntered > 22) setCapo(22);
+                  else if (numberEntered <= 0) setCapo("");
+                  else setCapo(numberEntered);
+                }}
+              />
+            </div>
+            <div className="box" style={{ marginBottom: "1em" }}>
+              <h6>Strumming Pattern</h6>
+              <div className="input-with-icon">
+                <input
+                  id="strum-input"
+                  className="form-control customInput"
+                  value={strum}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  onChange={(e) => {
+                    if (audioURL != "") setAudioURL("");
+                    setStrum(e.target.value);
+                  }}
+                />
+                <div style={{ marginTop: "1em", justifyContent: "flex-end" }}>
+                  {isPlaying ? (
+                    <PauseCircle
+                      onClick={() => {
+                        setIsPlaying(false);
+                        stop();
+                      }}
+                    />
+                  ) : (
+                    <Play
+                      id="play"
+                      onClick={() => {
+                        fetchSound();
+                      }}
+                    />
+                  )}
+
+                  <Mic
+                    onClick={() => {
+                      setRecordClick(true);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* {!controlsDisplayed ? (
         <div
           className="controls-heading"
           onClick={() => {
@@ -187,17 +263,17 @@ const ChordsEditor = ({ songObj, handleSuccessfulSave }) => {
             style={{
               display: "flex",
               alignItems: "center",
-              padding: "0em 3em",
+              padding: "0em 3.4em",
             }}
             onClick={() => {
               setControlsDisplayed(false);
             }}
           >
-            <p style={{ margin: "0" }}>Settings</p>
+            <p style={{ margin: "0", marginRight: "1em" }}>Settings</p>
             <ChevronUp />
           </div>
 
-          {/* <div className="box">
+           <div className="box">
             <h6>Align</h6>
             <Switch
               trueState="RIGHT"
@@ -206,7 +282,7 @@ const ChordsEditor = ({ songObj, handleSuccessfulSave }) => {
                 setTextAlignment(state ? "right" : "left");
               }}
             />
-          </div> */}
+          </div> 
           <div className="box">
             <h6>Capo on</h6>
             <input
@@ -260,7 +336,7 @@ const ChordsEditor = ({ songObj, handleSuccessfulSave }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       <div className="flex-list" style={{ height: "auto" }}>
         <div className="flex-row title">
           <h5>Title</h5>

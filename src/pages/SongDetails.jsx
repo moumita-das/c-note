@@ -19,12 +19,12 @@ const SongDetails = () => {
   const ulRef = useRef(null);
   const [selectedSong, setSelectedSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [scrollSpeed, setScrollSpeed] = useState(0);
-  const [lastScrollLineIndex, setLastScrollLineIndex] = useState(0);
+  const [scrollSpeed, setScrollSpeed] = useState(null);
+  const [chordChartsDisplayed, setChordChartsDisplayed] = useState(false);
   const speedList = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   const lines = selectedSong ? JSON.parse(selectedSong.lyrics_chords) : [];
   useEffect(() => {
-    if (scrollSpeed === 0) return;
+    if (scrollSpeed === null) return;
     scrollTo(ulRef.current, ulRef.current.scrollHeight, 5000, 1000);
   }, [scrollSpeed]);
   useEffect(() => {
@@ -40,6 +40,7 @@ const SongDetails = () => {
     setTimeout(function () {
       element.scrollTop = element.scrollTop + perTick;
       scrollTo(element, to, duration - 10, difference);
+      console.log(scrollSpeed);
     }, 80 / scrollSpeed);
   }
   const playRecording = async () => {
@@ -76,7 +77,8 @@ const SongDetails = () => {
       setIsPlaying(false);
     }
   }
-
+  const chords = selectedSong?.chords?.split(",");
+  console.log(chords);
   return (
     <Layout>
       <div className="home">
@@ -162,6 +164,33 @@ const SongDetails = () => {
                 </li>
               ))}
             </ul>
+            <div className="flex-box mb-0">
+              <div className="label">Chord Chart</div>
+              <div
+                className="value toggle-switch"
+                onClick={() => {
+                  setChordChartsDisplayed((prevState) => !prevState);
+                }}
+              >
+                {chordChartsDisplayed ? "HIDE" : "SHOW"}
+              </div>
+            </div>
+            <div
+              className="flex-box chord-list"
+              style={{ display: chordChartsDisplayed ? "flex" : "none" }}
+            >
+              {chords?.map((item, index) => (
+                <div className="chord-wrapper" key={index}>
+                  <h6>{item}</h6>
+                  <img src={`/images/chords/${item}.png`} />
+                </div>
+              ))}
+            </div>
+            {chordChartsDisplayed && (
+              <p style={{ fontSize: "0.8em", textAlign: "right" }}>
+                Shift + Scroll to move through the list
+              </p>
+            )}
           </div>
         </div>
       </div>

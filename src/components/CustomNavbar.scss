@@ -3,13 +3,58 @@
   align-items: center;
   background-color: var(--color-primary);
   width: 100%;
-  padding: 0.5em 1em;
+  padding: 0em 1em;
   // border-radius: 1em;
   height: 4em;
 
+  padding: 0;
+  margin-right: -10px;
+
+
   .brand {
-    height: 3em;
-    width: 8em;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    padding: 0;
+    padding-left: 2em;
+    color: antiquewhite;
+    margin: 0;
+    width: 25%;
+    height: 100%;
+    position: relative;
+    z-index: 9;
+    transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      height: 100%;
+      z-index: -1;
+      right: -50px;
+      width: 80%;
+      transform: skew(30deg);
+      background-color: var(--color-light);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      height: 100%;
+      z-index: -1;
+      right: 10%;
+      width: 2000px;
+      background-color: var(--color-light);
+    }
+
+    h4 {
+      font-family: "Merriweather", serif;
+      margin: 0;
+    }
   }
 
   ul {
@@ -17,38 +62,45 @@
     justify-content: flex-end;
     list-style: none;
     color: var(--color-white);
-    width: fit-content;
     margin-bottom: 0;
+
+    li {
+      padding: 0;
+      display: flex;
+      align-items: center;
+
+      .nav-item {
+        color: #fff;
+        text-decoration: none;
+        letter-spacing: 0.2rem;
+        margin: 0 0.75rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        width: fit-content;
+        cursor: pointer;
+        padding: 0.5em 2em;
+        border-radius: 4px;
+        border: 2px solid var(--color-primary);
+        display: flex;
+        column-gap: 4px;
+
+        &.active {
+          color: black;
+          font-weight: 600;
+          background: var(--color-light);
+          border: 2px solid var(--color-light);
+        }
+
+        &:hover {
+          border: 2px dashed var(--color-light);
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+    }
   }
 
-  .nav-item {
-    color: #fff;
-    text-decoration: none;
-    letter-spacing: 0.2rem;
-    margin: 0 0.75rem;
-    font-size: 1rem;
-    text-transform: uppercase;
-    width: fit-content;
-    cursor: pointer;
 
-    &:hover {
-      border-bottom: solid 4px var(--color-light);
-      font-style: bold;
-      font-size: larger;
-    }
-
-    &.active {
-      color: var(--color-light);
-      font-style: bold;
-      font-size: x-large;
-    }
-  }
-}
-
-@media screen and (max-width: 418px) {
-  .navbar {
-    ul {
-      padding: 0.25em;
-    }
-  }
 }
