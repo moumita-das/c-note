@@ -17,33 +17,33 @@ const Login = () => {
           <div className="form-wrapper">
             <UserCircle size={60} />
             <h2>WELCOME</h2>
-            <div class="form-group">
+            <div className="form-group">
               <User />
               <div className="input-container">
                 <input
                   id="form_name1"
-                  class="form-control"
+                  className="form-control"
                   type="text"
                   required
                   autoComplete="new-password"
                 />
-                <label for="form_name1">
-                  Email ID<span class="gl-form-asterisk"></span>
+                <label htmlFor="form_name1">
+                  Email ID<span className="gl-form-asterisk"></span>
                 </label>
               </div>
             </div>
-            <div class="form-group" style={{ marginBottom: "20px" }}>
+            <div className="form-group" style={{ marginBottom: "20px" }}>
               <Lock size={20} />
               <div className="input-container">
                 <input
-                  id="form_name1"
-                  class="form-control"
+                  id="form_name2"
+                  className="form-control"
                   type="password"
                   required
                   autoComplete="new-password"
                 />
-                <label for="form_name1">
-                  Password<span class="gl-form-asterisk"></span>
+                <label htmlFor="form_name2">
+                  Password<span className="gl-form-asterisk"></span>
                 </label>
               </div>
             </div>

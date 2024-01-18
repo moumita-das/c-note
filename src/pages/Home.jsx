@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Layout from "./Layout";
 import SongsList from "./SongsList";
 
 import "./Home.scss";
-import SongDetails from "./SongDetails";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const { userToken } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!userToken) navigate("/login");
+  }, [userToken]);
   const [songs, setSongs] = useState([]);
   useEffect(() => {
     if (songs.length > 0) return;

@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser, sendOTP, verifyOTP } from "../features/auth/authActions";
+
 import Layout from "./Layout";
 import { UserCircle, User, Lock, KeyIcon } from "lucide-react";
 import loginBg from "../assets/images/login-bg.png";
@@ -7,78 +11,76 @@ import ErrorToast from "../components/ErrorToast";
 import "./Login.scss";
 
 const Signup = () => {
+  const { loading, userToken, error, success } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
-  const [stepNum, setStepNum] = useState(0);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [stepNum, setStepNum] = useState(1);
+  const [formError, setFormError] = useState(false);
+  console.log("token:", userToken);
   const sendOtpButtonClicked = () => {
     if (email.trim().length === 0 || password.trim().length === 0) {
-      setError("Please enter all details.");
+      setFormError("Please enter all details.");
       return false;
     }
-    setLoading(true);
-    fetch("http://127.0.0.1:8000/send_otp", {
-      method: "POST",
-      body: JSON.stringify({
+    dispatch(
+      sendOTP({
         email,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((data) => data.json())
-      .then((res) => {
-        if (res.message === "failed") {
-          setError("We have run into an error. Please try later.");
-        } else if (res.message === "success") {
-          setStepNum(2);
-        }
       })
-      .finally(() => {
-        setLoading(false);
-      });
+    );
   };
   const verifyOtpButtonClicked = () => {
     if (email.trim().length === 0 || otp.trim().length === 0) {
-      setError("Please enter all details.");
+      setFormError("Please enter all details.");
       return false;
     }
-    fetch("http://127.0.0.1:8000/verify_otp", {
-      method: "POST",
-      body: JSON.stringify({
+    dispatch(
+      verifyOTP({
         email,
         otp,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((data) => data.json())
-      .then((res) => {
-        if (res.message === "failed") {
-          setError("We have run into an error. Please try later.");
-        } else if (res.message === "success") {
-          setStepNum(2);
-        }
       })
-      .finally(() => {
-        setLoading(false);
-      });
+    );
   };
+  console.log(success, error);
+  const createAccountBtnClicked = () => {
+    if (firstName.trim().length === 0 || lastName.trim().length === 0) {
+      setFormError("Please enter all details.");
+      return false;
+    }
+    dispatch(
+      registerUser({
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+      })
+    );
+  };
+  useEffect(() => {
+    if (success === true) setStepNum((prevState) => prevState + 1);
+  }, [success]);
+  useEffect(() => {
+    console.log(userToken);
+    if (userToken) navigate("/");
+  }, [userToken]);
   let display;
-  if (stepNum === 0)
+  if (stepNum === 1)
     display = (
       <div className="form-wrapper">
         <UserCircle size={60} />
         <h2>CREATE ACCOUNT</h2>
-        <div class="form-group">
+        <div className="form-group">
           <User />
           <div className="input-container">
             <input
               id="form_name1"
-              class="form-control"
+              className="form-control"
               type="text"
               required
               autoComplete="new-password"
@@ -87,17 +89,17 @@ const Signup = () => {
                 setEmail(e.target.value);
               }}
             />
-            <label for="form_name1">
-              Email ID<span class="gl-form-asterisk"></span>
+            <label htmlFor="form_name1">
+              Email ID<span className="gl-form-asterisk"></span>
             </label>
           </div>
         </div>
-        <div class="form-group" style={{ marginBottom: "20px" }}>
+        <div className="form-group" style={{ marginBottom: "20px" }}>
           <Lock size={20} />
           <div className="input-container">
             <input
               id="form_name2"
-              class="form-control"
+              className="form-control"
               type="password"
               required
               autoComplete="new-password"
@@ -106,8 +108,8 @@ const Signup = () => {
                 setPassword(e.target.value);
               }}
             />
-            <label for="form_name2">
-              Password<span class="gl-form-asterisk"></span>
+            <label htmlFor="form_name2">
+              Password<span className="gl-form-asterisk"></span>
             </label>
           </div>
         </div>
@@ -117,7 +119,7 @@ const Signup = () => {
             sendOtpButtonClicked();
           }}
         >
-          {loading ? <div class="lds-dual-ring"></div> : "Send OTP"}
+          {loading ? <div className="lds-dual-ring"></div> : "Send OTP"}
         </button>
       </div>
     );
@@ -128,12 +130,12 @@ const Signup = () => {
         <UserCircle size={60} />
         <h2>Verify OTP</h2>
 
-        <div class="form-group" style={{ marginBottom: "20px" }}>
+        <div className="form-group" style={{ marginBottom: "20px" }}>
           <KeyIcon size={20} />
           <div className="input-container">
             <input
               id="form_name2"
-              class="form-control"
+              className="form-control"
               type="password"
               required
               autoComplete="new-password"
@@ -143,7 +145,7 @@ const Signup = () => {
               }}
             />
             <label for="form_name2">
-              OTP<span class="gl-form-asterisk"></span>
+              OTP<span className="gl-form-asterisk"></span>
             </label>
           </div>
         </div>
@@ -157,6 +159,60 @@ const Signup = () => {
         </button>
       </div>
     );
+  else if (stepNum === 3)
+    display = (
+      <div className="form-wrapper">
+        <UserCircle size={60} />
+        <h2>ENTER DETAILS</h2>
+        <div className="form-group">
+          <User />
+          <div className="input-container">
+            <input
+              id="form_name1"
+              className="form-control"
+              type="text"
+              required
+              autoComplete="new-password"
+              value={firstName}
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
+            />
+            <label htmlFor="form_name1">
+              First Name<span className="gl-form-asterisk"></span>
+            </label>
+          </div>
+        </div>
+        <div className="form-group" style={{ marginBottom: "20px" }}>
+          <User size={20} />
+          <div className="input-container">
+            <input
+              id="form_name2"
+              className="form-control"
+              type="text"
+              required
+              autoComplete="new-password"
+              value={lastName}
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
+            />
+            <label htmlFor="form_name2">
+              Last Name<span className="gl-form-asterisk"></span>
+            </label>
+          </div>
+        </div>
+        <button
+          className={`btn customBtn`}
+          onClick={() => {
+            createAccountBtnClicked();
+          }}
+        >
+          {loading ? <div className="lds-dual-ring"></div> : "Get Started"}
+        </button>
+      </div>
+    );
+  console.log(stepNum);
   return (
     <Layout>
       <div id="login-container">
@@ -168,14 +224,8 @@ const Signup = () => {
           {display}
         </div>
       </div>
-      {error && (
-        <ErrorToast
-          error={error}
-          resetError={() => {
-            setError(false);
-          }}
-        />
-      )}
+      {error && <ErrorToast error={error} />}
+      {formError && <ErrorToast error={formError} />}
     </Layout>
   );
 };

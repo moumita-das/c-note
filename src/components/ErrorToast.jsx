@@ -6,7 +6,7 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 
 import "./ErrorToast.scss";
 
-const ErrorToast = ({ error, resetError }) => {
+const ErrorToast = ({ error }) => {
   const [display, setDisplay] = useState(true);
   useEffect(() => {
     if (error !== false) setDisplay(true);
@@ -26,7 +26,6 @@ const ErrorToast = ({ error, resetError }) => {
                 className="close-btn"
                 onClick={() => {
                   setDisplay(false);
-                  resetError();
                 }}
               >
                 <X />

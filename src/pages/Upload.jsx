@@ -1,11 +1,11 @@
-import React from "react";
-import Layout from "./Layout";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Form from "react-bootstrap/Form";
+import Layout from "./Layout";
+import ChordsEditor from "./ChordsEditor";
 
 import "./Upload.scss";
-import { useState } from "react";
-import { useEffect } from "react";
-import ChordsEditor from "./ChordsEditor";
 
 const LyricsEditor = ({ value, changeHandler }) => {
   return (
@@ -22,6 +22,8 @@ const LyricsEditor = ({ value, changeHandler }) => {
 };
 
 const Upload = () => {
+  const { userToken } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [lyrics, setLyrics] = useState("");
   const [lyricsWithChords, setLyricsWithChords] = useState([]);
   const handleResetLyrics = () => {
