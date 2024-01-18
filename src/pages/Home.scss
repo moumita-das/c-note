@@ -1,6 +1,6 @@
 .container {
   height: calc(100vh - 5em) !important;
-
+  position: relative;
   .home {
     padding: 1em 2em;
     height: 100%;
@@ -31,7 +31,6 @@
           &:focus-visible,
           &:focus-within {
             background-color: #e6e6e6;
-
           }
 
           .search {
@@ -91,13 +90,20 @@
           tbody {
             tr {
               background: rgb(70, 139, 151);
-              background: linear-gradient(90deg,
-                  rgba(70, 139, 151, 1) 0%,
-                  rgba(239, 98, 98, 1) 61%,
-                  rgba(243, 170, 96, 1) 100%);
+              background: linear-gradient(
+                90deg,
+                rgba(70, 139, 151, 1) 0%,
+                rgba(239, 98, 98, 1) 61%,
+                rgba(243, 170, 96, 1) 100%
+              );
               border-color: transparent;
               background: rgb(166, 207, 152);
-              background: linear-gradient(90deg, rgba(166, 207, 152, 1) 0%, rgba(228, 193, 193, 1) 35%, rgba(242, 255, 233, 1) 88%);
+              background: linear-gradient(
+                90deg,
+                rgba(166, 207, 152, 1) 0%,
+                rgba(228, 193, 193, 1) 35%,
+                rgba(242, 255, 233, 1) 88%
+              );
 
               td {
                 background: transparent;
@@ -113,18 +119,23 @@
                 }
               }
 
-
-
               &:hover {
                 cursor: pointer;
                 background: var(--color-secondary);
                 background: rgb(243, 170, 96);
-                background: linear-gradient(90deg,
-                    rgba(243, 170, 96, 1) 0%,
-                    rgba(239, 98, 98, 1) 65%,
-                    rgba(70, 139, 151, 1) 100%);
+                background: linear-gradient(
+                  90deg,
+                  rgba(243, 170, 96, 1) 0%,
+                  rgba(239, 98, 98, 1) 65%,
+                  rgba(70, 139, 151, 1) 100%
+                );
                 background: rgb(242, 255, 233);
-                background: linear-gradient(90deg, rgba(242, 255, 233, 1) 0%, rgba(228, 193, 193, 1) 35%, rgba(166, 207, 152, 1) 72%);
+                background: linear-gradient(
+                  90deg,
+                  rgba(242, 255, 233, 1) 0%,
+                  rgba(228, 193, 193, 1) 35%,
+                  rgba(166, 207, 152, 1) 72%
+                );
 
                 td {
                   &:first-child {
@@ -134,12 +145,7 @@
                   &.delete {
                     color: black;
                   }
-
                 }
-
-
-
-
               }
             }
           }
@@ -195,7 +201,7 @@
           border-radius: 25px;
           margin-bottom: 1em;
 
-          >div {
+          > div {
             padding: 0.7em 1em;
           }
 
