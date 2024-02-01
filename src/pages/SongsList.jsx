@@ -38,7 +38,7 @@ const SongsList = ({ songList, clickHandler }) => {
         </div>
       </div>
       <div className="table-wrapper">
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col-6">Name</th>
@@ -49,11 +49,12 @@ const SongsList = ({ songList, clickHandler }) => {
             </tr>
           </thead>
           <tbody>
-            {displayedList.map((item) => (
+            {displayedList.map((item, index) => (
               <tr
                 onClick={() => {
                   clickHandler(item.id);
                 }}
+                key={index}
               >
                 <td className="col-6">{item.title}</td>
                 <td className="col-1">{item.capo}</td>

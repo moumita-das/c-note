@@ -23,7 +23,6 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [stepNum, setStepNum] = useState(1);
   const [formError, setFormError] = useState(false);
-  console.log("token:", userToken);
   const sendOtpButtonClicked = () => {
     if (email.trim().length === 0 || password.trim().length === 0) {
       setFormError("Please enter all details.");
@@ -47,7 +46,6 @@ const Signup = () => {
       })
     );
   };
-  console.log(success, error);
   const createAccountBtnClicked = () => {
     if (firstName.trim().length === 0 || lastName.trim().length === 0) {
       setFormError("Please enter all details.");

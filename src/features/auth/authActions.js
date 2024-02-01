@@ -45,3 +45,19 @@ export const verifyOTP = createAsyncThunk(
     }
   }
 );
+
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${backendUrlBase}/login`,
+        { email, password },
+        config
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(getError(error));
+    }
+  }
+);

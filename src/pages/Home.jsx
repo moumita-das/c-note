@@ -17,6 +17,9 @@ const Home = () => {
     if (songs.length > 0) return;
     fetch("http://127.0.0.1:8000/fetch_all_saved_chords", {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
     })
       .then((data) => data.json())
       .then((res) => {

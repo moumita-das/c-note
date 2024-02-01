@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser } from "../features/auth/authActions";
 import Layout from "./Layout";
 import "./Login.scss";
 import { UserCircle, User, Lock } from "lucide-react";
 import loginBg from "../assets/images/login-bg.png";
-import { Link } from "react-router-dom";
+import ErrorToast from "../components/ErrorToast";
 
 const Login = () => {
+  const { userToken, loading, success, error } = useSelector(
+    (state) => state.auth
+  );
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (success && userToken) navigate("/");
+  }, [userToken]);
   return (
     <Layout>
       <div id="login-container">
@@ -26,6 +39,10 @@ const Login = () => {
                   type="text"
                   required
                   autoComplete="new-password"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
                 <label htmlFor="form_name1">
                   Email ID<span className="gl-form-asterisk"></span>
@@ -41,13 +58,25 @@ const Login = () => {
                   type="password"
                   required
                   autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
                 <label htmlFor="form_name2">
                   Password<span className="gl-form-asterisk"></span>
                 </label>
               </div>
             </div>
-            <button className="btn customBtn">Login</button>
+
+            <button
+              className="btn customBtn"
+              onClick={() => {
+                dispatch(loginUser({ email, password }));
+              }}
+            >
+              {loading ? <div className="lds-dual-ring"></div> : "Login"}
+            </button>
             <div className="extra-links">
               <Link to="/home">Forgot Password?</Link>
               <Link to="/signup">Create Account</Link>
@@ -55,6 +84,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {error && <ErrorToast error={error} />}
     </Layout>
   );
 };
